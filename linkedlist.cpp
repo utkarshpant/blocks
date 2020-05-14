@@ -1,86 +1,163 @@
 #include <iostream>
 #include <cstdlib>
+#include <string.h>
 
-//a basic demonstration of singly-linked lists;
-struct node {
+struct Node {
+    Node *next;
+    Node *prev;
     int data;
-    node* next;
 
 public:
-    node() {
-        this->data = 0;
-        this->next = NULL;
-    }
+    // Node () {
+    //     //every node initialised without a data argument gets initialised to 0 by default.
+    //     next = NULL;
+    //     prev = NULL;
+    //     data = 0;
+    // }
 
-    node(int arg) {
-        this->data = arg;
-        this->next = NULL;
+    Node (int arg = 0) {
+        next = NULL;
+        prev = NULL;
+        data = arg;
     }
 };
 
-void addNodeToFront(node **head, int arg) {  
-    node *newNode = new node(arg);
-	newNode->next = *head;
-	*head = newNode;
-}
+class List {
+private:
+    int count;
+    Node *head;
+    Node *tail;
+    // Node* createNode();
+    Node* createNode(int arg = 0);
 
-void addNodeToBack(node **head, int arg) {
-    node *current = *head;
-    while (current->next != NULL) {
-        current = current->next;
+public:
+    // Manipulation functions;
+    void pushBack(int arg = 0);
+    void pushFront(int arg = 0);
+    int pop();
+    int popBack();
+
+    // traverse functions;
+    void printList(std::string sep = "\n", std::string end_sep = "\n");
+    void printListReverse(std::string sep = "\n", std::string end_sep = "\n");
+    
+    // Utility functions;
+    int getSize();
+    bool isEmpty();
+
+    List() {
+        count = 0;
+        head = NULL;
+        tail = NULL;
     }
-    node *newNode = new node(arg);
-    current->next = newNode;
-    newNode->next = NULL;
+};
+
+// Defitions of member functions of the Node struct;
+
+Node* List::createNode(int arg) {
+    Node *newNode = new Node(arg);
+    return newNode;
 }
 
-void addNodeAtIndex(node **head, int arg, int ind) {
-    //indexing starts from 0;
-    int counter = 0;
-    node *current = *head;
-    while (counter != ind - 1) {
-        current = current->next;
-        counter++;
+// Definitions of member functions of the List class;
+
+void List::pushFront(int arg) {
+    Node *tempNode = createNode(arg);
+    
+    if (head == NULL) {
+        // Changing head target;
+        head = tempNode;
+
+        // Setting linkages;
+        tempNode->next = NULL;
+        tempNode->prev = NULL;
+        tail = tempNode;
+    } else {
+        tempNode->next = head;
+        head->prev = tempNode;
+        head = tempNode;
     }
-    node *newNode = new node(arg);
-    newNode->next = current->next;
-    current->next = newNode;
+    // std::cout << "Incrementing count on call to create node with data " << arg << "." << std::endl;
+    count++;
+
 }
 
-void printList(node **head) {
-	node *current = *head;
-	while (current != NULL)
-	{
-		std::cout << current->data << std::endl;
-		current = current->next;
-	}
-	//since the tail node will fail the while test,
-	//the value must be printed separately;
-}
+void List::pushBack(int arg) {
+    Node *tempNode = createNode(arg);
+    if (head == NULL) {
+        // Changing head target;
+        head = tempNode;
 
-void delFirstNode(node **head) {
-    *head = (*head)->next;
-}
-
-void delLastNode(node **head) {
-    node *current = *head;
-    node *prev = *head;
-    while (current->next != NULL) {
-        prev = current;
-        current = current->next;
+        // Setting linkages;
+        tempNode->next = NULL;
+        tempNode->prev = NULL;
+        tail = tempNode;
+    } else {
+        //  Use tail directly;
+        tail->next = tempNode;
+        tempNode->prev = tail;
+        tail = tempNode;
     }
-    prev->next = NULL;
+    // std::cout << "Incrementing count on call to create node with data " << arg << "." << std::endl;
+    count++;
 }
 
-int main() {
-    node *head = NULL;
-    addNodeToFront(&head, 1);
-    addNodeToFront(&head, 2);
-    addNodeToFront(&head, 3);
-    addNodeToBack(&head, 4);
-    addNodeAtIndex(&head, 5, 2);
-    delFirstNode(&head);
-    delLastNode(&head);
-    printList(&head);
-    return 0;
+void List::printList(std::string sep, std::string end_sep) {
+    Node *current = head;
+    do {
+        if (current->next == NULL) {
+            // last element;
+            std::cout << current->data << end_sep;
+            break;
+        } else {
+            std::cout << current->data << sep;
+            current = current->next;
+        }
+        
+    }
+    while (current != NULL);
+}
+
+void List::printListReverse(std::string sep, std::string end_sep) {
+    Node *current = tail;
+    do {
+        if (current->prev == NULL) {
+            // last element;
+            std::cout << current->data << end_sep;
+            break;
+        } else {
+            std::cout << current->data << sep;
+            current = current->prev;
+        }
+        
+    }
+    while (current != NULL);
+}
+
+int List::pop() {
+    int result =  head->data;
+    head = head->next;
+    head->prev = NULL;
+    count--;
+    return result;
+}
+
+int List::popBack() {
+    int result = tail->data;
+    tail = tail->prev;
+    tail->next = NULL;
+    count--;
+    return result;
+}
+
+int List::getSize() {
+    return count;
+}
+
+bool List::isEmpty() {
+    if (head ==  NULL) {
+        return true;  
+    } else {
+        return false;
+    }
 }
