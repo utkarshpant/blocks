@@ -4,28 +4,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include "Node.h"
 #include "EmptyListException.h"
 #include "OutOfBoundsException.h"
-
-struct Node {
-    Node *next;
-    Node *prev;
-    int data;
-
-public:
-    // Node  {
-    //     //every node initialised without a data argument gets initialised to 0 by default.
-    //     next = NULL;
-    //     prev = NULL;
-    //     data = 0;
-    // }
-
-    Node (int arg = 0) {
-        next = NULL;
-        prev = NULL;
-        data = arg;
-    }
-};
 
 class List {
 private:
@@ -52,6 +33,8 @@ public:
     // Utility functions;
     int getSize();
     bool isEmpty();
+    void sort();
+    void search(int key);
 
     List() {
         ID = ++listCount;
@@ -146,7 +129,7 @@ void List::deleteAtPosition(int arg) {
 
 void List::printList(std::string sep, std::string end_sep) {
     Node *current = head;
-    if (current == NULL) {
+    if (isEmpty()) {
         throw EmptyListException(std::to_string(ID));
     } else {
         do {
@@ -218,6 +201,29 @@ bool List::isEmpty() {
         return true;  
     } else {
         return false;
+    }
+}
+
+void List::sort() {
+    // implementing insertion sort;
+    if (isEmpty()) {
+        throw EmptyListException(std::to_string(ID));
+    } else {
+        Node *iPtr = head;
+        Node *current = head;
+
+        while (current != NULL) {
+            iPtr = head;
+            while (iPtr != current) {
+                if (iPtr->data > current->data) {
+                    int temp = current->data;
+                    current->data = iPtr->data;
+                    iPtr->data = temp;
+                }
+                iPtr = iPtr->next;
+            }
+            current = current->next;
+        }
     }
 }
 
