@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <string>
 #include "EmptyListException.h"
+#include "OutOfBoundsException.h"
 
 struct Node {
     Node *next;
@@ -42,6 +43,7 @@ public:
     void pushFront(int arg = 0);
     int pop();
     int popBack();
+    void deleteAtPosition(int pos);
 
     // traverse functions;
     void printList(std::string sep = "\n", std::string end_sep = "\n");
@@ -53,6 +55,7 @@ public:
 
     List() {
         ID = ++listCount;
+        count = -1;
         head = NULL;
         tail = NULL;
     }
@@ -85,9 +88,7 @@ void List::pushFront(int arg) {
         head->prev = tempNode;
         head = tempNode;
     }
-    // std::cout << "Incrementing count on call to create node with data " << arg << "." << std::endl;
     count++;
-
 }
 
 void List::pushBack(int arg) {
@@ -106,8 +107,41 @@ void List::pushBack(int arg) {
         tempNode->prev = tail;
         tail = tempNode;
     }
-    // std::cout << "Incrementing count on call to create node with data " << arg << "." << std::endl;
     count++;
+}
+
+void List::deleteAtPosition(int arg) {
+    /*  The argument supplied is the exact position deleted, indexed from 0.
+    For example, in 0 -> 1 -> 2 -> 3 -> 4 -> 5, arg == 3 will result in: 0 -> 1 -> 2-> 4 -> 5
+    */
+    if (arg > getSize()) {
+        throw OutOfBoundsException(arg);
+    } else {
+        // Relative pointers;
+        Node *current = head;
+        Node *prevNode = current->prev;
+        Node *nextNode = current->next;
+            
+        // edge case: position = (list size) - 1, i.e. tail node;
+        if (arg == getSize()) {
+            throw OutOfBoundsException(arg);
+        }
+        else if (arg == getSize() - 1) {
+            current = tail;
+            Node *prevNode = current->prev;
+            prevNode->next = NULL;
+        } else {
+            int counter = 0;
+            while (counter != arg) {
+                current = current->next;
+                counter++;
+            }        
+            prevNode->next = nextNode;
+            nextNode->prev = prevNode;
+        }        
+
+
+    }
 }
 
 void List::printList(std::string sep, std::string end_sep) {
@@ -116,15 +150,15 @@ void List::printList(std::string sep, std::string end_sep) {
         throw EmptyListException(std::to_string(ID));
     } else {
         do {
-                if (current->next == NULL) {
-                    // last element;
-                    std::cout << current->data << end_sep;
-                    break;
-                } else {
-                    std::cout << current->data << sep;
-                    current = current->next;
-                }
+            if (current->next == NULL) {
+                // last element;
+                std::cout << current->data << end_sep;
+                break;
+            } else {
+                std::cout << current->data << sep;
+                current = current->next;
             }
+        }
         while (current != NULL);
     }
     
@@ -151,10 +185,8 @@ void List::printListReverse(std::string sep, std::string end_sep) {
 
 int List::pop() {
     int result;
-    if (head == NULL) {
-        // std::cout << "EMPTY LIST!" << "\n";
-        // throw EmptyListException(std::to_string(ID));
-        std::cout << "EMPTY LIST!\n"; 
+    if (isEmpty()) {
+        throw EmptyListException(std::to_string(ID));
     } else {
         result =  head->data;
         head = head->next;
@@ -166,7 +198,7 @@ int List::pop() {
 
 int List::popBack() {
     int result;
-    if (tail == NULL) {
+    if (isEmpty()) {
         throw EmptyListException(std::to_string(ID));
     } else {
         result = tail->data;
@@ -178,7 +210,7 @@ int List::popBack() {
 }
 
 int List::getSize() {
-    return count;
+    return count + 1;
 }
 
 bool List::isEmpty() {

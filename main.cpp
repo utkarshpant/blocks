@@ -8,15 +8,16 @@ int main() {
     list.pushBack(10);
     list.pushBack(20);
     list.pushFront(30);
-    std::cout << list.pop() << " 1" << std::endl;
+    list.pushFront(40);
+    list.pushBack(50);
+    list.pushBack(60);
+    std::cout << "The number of elements in the list is:\t" << list.getSize() << std::endl;
+    list.printList();
     try {
-        std::cout << "HERE!";
-        std::cout << list.pop() << " 2";
-        std::cout << list.pop() << " 3";
-
-    } catch(EmptyListException ex) {
-        std::cout << "Exception caught!";
+        list.deleteAtPosition(list.getSize() - 1);
+    } catch (OutOfBoundsException ex) {
         std::cout << ex.what();
     }
+    list.printList();
     return 0;
 }

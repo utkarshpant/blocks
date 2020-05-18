@@ -1,5 +1,5 @@
-#ifndef EMPLTY_LIST_EXCEPTION_H
-#define EMPLTY_LIST_EXCEPTION_H
+#ifndef EMPTY_LIST_EXCEPTION_H
+#define EMPTY_LIST_EXCEPTION_H
 
 #include <iostream>
 #include <exception>
