@@ -1,6 +1,10 @@
+#ifndef LIST_H
+#define LIST_H
+
 #include <iostream>
 #include <cstdlib>
-#include <string.h>
+#include <string>
+#include "EmptyListException.h"
 
 struct Node {
     Node *next;
@@ -8,7 +12,7 @@ struct Node {
     int data;
 
 public:
-    // Node () {
+    // Node  {
     //     //every node initialised without a data argument gets initialised to 0 by default.
     //     next = NULL;
     //     prev = NULL;
@@ -24,6 +28,8 @@ public:
 
 class List {
 private:
+    static int listCount;
+    int ID;
     int count;
     Node *head;
     Node *tail;
@@ -46,11 +52,13 @@ public:
     bool isEmpty();
 
     List() {
-        count = 0;
+        ID = ++listCount;
         head = NULL;
         tail = NULL;
     }
 };
+
+int List::listCount = 0;
 
 // Defitions of member functions of the Node struct;
 
@@ -104,49 +112,68 @@ void List::pushBack(int arg) {
 
 void List::printList(std::string sep, std::string end_sep) {
     Node *current = head;
-    do {
-        if (current->next == NULL) {
-            // last element;
-            std::cout << current->data << end_sep;
-            break;
-        } else {
-            std::cout << current->data << sep;
-            current = current->next;
-        }
-        
+    if (current == NULL) {
+        throw EmptyListException(std::to_string(ID));
+    } else {
+        do {
+                if (current->next == NULL) {
+                    // last element;
+                    std::cout << current->data << end_sep;
+                    break;
+                } else {
+                    std::cout << current->data << sep;
+                    current = current->next;
+                }
+            }
+        while (current != NULL);
     }
-    while (current != NULL);
+    
 }
 
 void List::printListReverse(std::string sep, std::string end_sep) {
     Node *current = tail;
-    do {
-        if (current->prev == NULL) {
-            // last element;
-            std::cout << current->data << end_sep;
-            break;
-        } else {
-            std::cout << current->data << sep;
-            current = current->prev;
-        }
-        
+    if (current == NULL) {
+        throw EmptyListException(std::to_string(ID));
+    } else {
+        do {
+            if (current->prev == NULL) {
+                // last element;
+                std::cout << current->data << end_sep;
+                break;
+            } else {
+                std::cout << current->data << sep;
+                current = current->prev;
+            }
+        } 
+        while (current != NULL);
     }
-    while (current != NULL);
 }
 
 int List::pop() {
-    int result =  head->data;
-    head = head->next;
-    head->prev = NULL;
-    count--;
+    int result;
+    if (head == NULL) {
+        // std::cout << "EMPTY LIST!" << "\n";
+        // throw EmptyListException(std::to_string(ID));
+        std::cout << "EMPTY LIST!\n"; 
+    } else {
+        result =  head->data;
+        head = head->next;
+        head->prev = NULL;
+        count--;
+    }
     return result;
 }
 
 int List::popBack() {
-    int result = tail->data;
-    tail = tail->prev;
-    tail->next = NULL;
-    count--;
+    int result;
+    if (tail == NULL) {
+        throw EmptyListException(std::to_string(ID));
+    } else {
+        result = tail->data;
+        tail = tail->prev;
+        tail->next = NULL;
+        count--;    
+    }
     return result;
 }
 
@@ -161,3 +188,5 @@ bool List::isEmpty() {
         return false;
     }
 }
+
+#endif
