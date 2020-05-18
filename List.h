@@ -8,22 +8,23 @@
 #include "EmptyListException.h"
 #include "OutOfBoundsException.h"
 
+template <class T>
 class List {
 private:
     static int listCount;
     int ID;
     int count;
-    Node *head;
-    Node *tail;
+    Node<T>  *head;
+    Node<T> *tail;
     // Node* createNode();
-    Node* createNode(int arg = 0);
+    Node<T>* createNode(T arg);
 
 public:
     // Manipulation functions;
-    void pushBack(int arg = 0);
-    void pushFront(int arg = 0);
-    int pop();
-    int popBack();
+    void pushBack(T arg);
+    void pushFront(T arg);
+    T pop();
+    T popBack();
     void deleteAtPosition(int pos);
 
     // traverse functions;
@@ -34,7 +35,7 @@ public:
     int getSize();
     bool isEmpty();
     void sort();
-    void search(int key);
+    void search(T key);
 
     List() {
         ID = ++listCount;
@@ -44,19 +45,20 @@ public:
     }
 };
 
-int List::listCount = 0;
+template <class T>
+int List<T>::listCount = 0;
 
 // Defitions of member functions of the Node struct;
-
-Node* List::createNode(int arg) {
-    Node *newNode = new Node(arg);
+template <class T>
+Node<T>* List<T>::createNode(T arg) {
+    Node<T>* newNode = new Node<T>(arg);
     return newNode;
 }
 
 // Definitions of member functions of the List class;
-
-void List::pushFront(int arg) {
-    Node *tempNode = createNode(arg);
+template <class T>
+void List<T>::pushFront(T arg) {
+    Node<T>* tempNode = createNode(arg);
     
     if (head == NULL) {
         // Changing head target;
@@ -74,8 +76,9 @@ void List::pushFront(int arg) {
     count++;
 }
 
-void List::pushBack(int arg) {
-    Node *tempNode = createNode(arg);
+template <class T>
+void List<T>::pushBack(T arg) {
+    Node<T>* tempNode = createNode(arg);
     if (head == NULL) {
         // Changing head target;
         head = tempNode;
@@ -93,7 +96,8 @@ void List::pushBack(int arg) {
     count++;
 }
 
-void List::deleteAtPosition(int arg) {
+template <class T>
+void List<T>::deleteAtPosition(int arg) {
     /*  The argument supplied is the exact position deleted, indexed from 0.
     For example, in 0 -> 1 -> 2 -> 3 -> 4 -> 5, arg == 3 will result in: 0 -> 1 -> 2-> 4 -> 5
     */
@@ -101,9 +105,9 @@ void List::deleteAtPosition(int arg) {
         throw OutOfBoundsException(arg);
     } else {
         // Relative pointers;
-        Node *current = head;
-        Node *prevNode = current->prev;
-        Node *nextNode = current->next;
+        Node<T>* current = head;
+        Node<T>* prevNode = current->prev;
+        Node<T>* nextNode = current->next;
             
         // edge case: position = (list size) - 1, i.e. tail node;
         if (arg == getSize()) {
@@ -111,7 +115,7 @@ void List::deleteAtPosition(int arg) {
         }
         else if (arg == getSize() - 1) {
             current = tail;
-            Node *prevNode = current->prev;
+            prevNode = current->prev;
             prevNode->next = NULL;
         } else {
             int counter = 0;
@@ -127,8 +131,9 @@ void List::deleteAtPosition(int arg) {
     }
 }
 
-void List::printList(std::string sep, std::string end_sep) {
-    Node *current = head;
+template <class T>
+void List<T>::printList(std::string sep, std::string end_sep) {
+    Node<T>* current = head;
     if (isEmpty()) {
         throw EmptyListException(std::to_string(ID));
     } else {
@@ -147,8 +152,9 @@ void List::printList(std::string sep, std::string end_sep) {
     
 }
 
-void List::printListReverse(std::string sep, std::string end_sep) {
-    Node *current = tail;
+template <class T>
+void List<T>::printListReverse(std::string sep, std::string end_sep) {
+    Node<T>* current = tail;
     if (current == NULL) {
         throw EmptyListException(std::to_string(ID));
     } else {
@@ -166,7 +172,8 @@ void List::printListReverse(std::string sep, std::string end_sep) {
     }
 }
 
-int List::pop() {
+template <class T>
+T List<T>::pop() {
     int result;
     if (isEmpty()) {
         throw EmptyListException(std::to_string(ID));
@@ -179,7 +186,8 @@ int List::pop() {
     return result;
 }
 
-int List::popBack() {
+template <class T>
+T List<T>::popBack() {
     int result;
     if (isEmpty()) {
         throw EmptyListException(std::to_string(ID));
@@ -192,11 +200,13 @@ int List::popBack() {
     return result;
 }
 
-int List::getSize() {
+template <class T>
+int List<T>::getSize() {
     return count + 1;
 }
 
-bool List::isEmpty() {
+template <class T>
+bool List<T>::isEmpty() {
     if (head ==  NULL) {
         return true;  
     } else {
@@ -204,19 +214,20 @@ bool List::isEmpty() {
     }
 }
 
-void List::sort() {
+template <class T>
+void List<T>::sort() {
     // implementing insertion sort;
     if (isEmpty()) {
         throw EmptyListException(std::to_string(ID));
     } else {
-        Node *iPtr = head;
-        Node *current = head;
+        Node<T> *iPtr = head;
+        Node<T>* current = head;
 
         while (current != NULL) {
             iPtr = head;
             while (iPtr != current) {
                 if (iPtr->data > current->data) {
-                    int temp = current->data;
+                    T temp = current->data;
                     current->data = iPtr->data;
                     iPtr->data = temp;
                 }

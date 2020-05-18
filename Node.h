@@ -3,10 +3,11 @@
 
 #include <cstdlib>
 
+template <class T>
 struct Node {
     Node *next;
     Node *prev;
-    int data;
+    T data;
 
 public:
     // Node  {
@@ -15,8 +16,7 @@ public:
     //     prev = NULL;
     //     data = 0;
     // }
-
-    Node (int arg = 0) {
+    Node(T arg) {
         next = NULL;
         prev = NULL;
         data = arg;
