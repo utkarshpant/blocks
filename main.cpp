@@ -3,13 +3,13 @@
 #include "List.h"
 
 int main() {
-    List<std::string> list;
-    list.pushBack("ab");
-    list.pushBack("ad");
-    list.pushFront("fb");
-    list.pushFront("jk");
-    list.pushBack("jg");
-    list.pushBack("hc");
+    List<int> list;
+    list.pushBack(10);
+    list.pushBack(21);
+    list.pushFront(32);
+    list.pushFront(45);
+    list.pushBack(54);
+    list.pushBack(63);
     // std::cout << "The number of elements in the list is:\t" << list.getSize() << std::endl;
     list.printList(", ", ".");
     try {
@@ -24,5 +24,18 @@ int main() {
     //     list.pushBack(rand() % 50);
     // }
 
+
+    // demo of predicates/pointers to functions; 
+    bool isEven(int a);
+    list.remove_if(isEven);
+    list.printList(", ");
     return 0;
+}
+
+bool isEven(int a) {
+    if (a % 2 == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }

@@ -36,6 +36,8 @@ public:
     bool isEmpty();
     void sort();
     void search(T key);
+    template<typename Predicate>
+    void remove_if(Predicate pred);
 
     List() {
         ID = ++listCount;
@@ -237,5 +239,31 @@ void List<T>::sort() {
         }
     }
 }
+
+template <class T>
+template <typename Predicate>
+void List<T>::remove_if(Predicate pred) {
+        Node<T>* current = head;
+        while (current != tail) {
+            if(pred(current->data) == true) {
+                // std::cout <<"Pred output on " << current->data << " = " << pred(current->data);
+                Node<T>* prevNode;
+                Node<T>* nextNode;
+                if (current == head) {
+                    head = head->next;
+                    count--;
+                } else if(current == tail) {
+                    tail = tail->prev;
+                    count--;
+                } else {
+                    prevNode = current->prev;
+                    nextNode = current->next;
+                    prevNode->next = nextNode;
+                    count--;
+                }
+            }
+            current = current->next;
+        }
+    }
 
 #endif
