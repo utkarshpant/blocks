@@ -11,44 +11,45 @@
 template <class T>
 class List {
 private:
-    static int listCount;
+    static int list_count;
     int ID;
-    int count;
-    Node<T>  *head;
+    int node_count;
+    Node<T> *head;
     Node<T> *tail;
     // Node* createNode();
     Node<T>* createNode(T arg);
 
 public:
     // Manipulation functions;
-    void pushBack(T arg);
-    void pushFront(T arg);
+    void push_back(T arg);
+    void push(T arg);
     T pop();
-    T popBack();
-    void deleteAtPosition(int pos);
+    T pop_back();
+    void erase(int pos);
 
     // traverse functions;
-    void printList(std::string sep = "\n", std::string end_sep = "\n");
-    void printListReverse(std::string sep = "\n", std::string end_sep = "\n");
+    void print_list(std::string sep = "\n", std::string end_sep = "\n");
+    void print_list_reverse(std::string sep = "\n", std::string end_sep = "\n");
     
     // Utility functions;
-    int getSize();
-    bool isEmpty();
+    Node<T>* get_head();
+    int size();
+    bool empty();
     void sort();
     void search(T key);
     template<typename Predicate>
     void remove_if(Predicate pred);
 
     List() {
-        ID = ++listCount;
-        count = -1;
+        ID = ++list_count;
+        node_count = -1;
         head = NULL;
         tail = NULL;
     }
 };
 
 template <class T>
-int List<T>::listCount = 0;
+int List<T>::list_count = 0;
 
 // Defitions of member functions of the Node struct;
 template <class T>
@@ -59,7 +60,7 @@ Node<T>* List<T>::createNode(T arg) {
 
 // Definitions of member functions of the List class;
 template <class T>
-void List<T>::pushFront(T arg) {
+void List<T>::push(T arg) {
     Node<T>* tempNode = createNode(arg);
     
     if (head == NULL) {
@@ -75,11 +76,11 @@ void List<T>::pushFront(T arg) {
         head->prev = tempNode;
         head = tempNode;
     }
-    count++;
+    node_count++;
 }
 
 template <class T>
-void List<T>::pushBack(T arg) {
+void List<T>::push_back(T arg) {
     Node<T>* tempNode = createNode(arg);
     if (head == NULL) {
         // Changing head target;
@@ -95,15 +96,48 @@ void List<T>::pushBack(T arg) {
         tempNode->prev = tail;
         tail = tempNode;
     }
-    count++;
+    node_count++;
 }
 
 template <class T>
-void List<T>::deleteAtPosition(int arg) {
+T List<T>::pop() {
+    int result;
+    if (empty()) {
+        throw EmptyListException(std::to_string(ID));
+    } else if(head->next == NULL) {
+        // only head node remains;
+        result = head->data;
+        head = NULL;
+        node_count--;
+    } else {
+        result =  head->data;
+        head = head->next;
+        head->prev = NULL;
+        node_count--;
+    }
+    return result;
+}
+
+template <class T>
+T List<T>::pop_back() {
+    int result;
+    if (empty()) {
+        throw EmptyListException(std::to_string(ID));
+    } else {
+        result = tail->data;
+        tail = tail->prev;
+        tail->next = NULL;
+        node_count--;    
+    }
+    return result;
+}
+
+template <class T>
+void List<T>::erase(int arg) {
     /*  The argument supplied is the exact position deleted, indexed from 0.
     For example, in 0 -> 1 -> 2 -> 3 -> 4 -> 5, arg == 3 will result in: 0 -> 1 -> 2-> 4 -> 5
     */
-    if (arg > getSize()) {
+    if (arg > size()) {
         throw OutOfBoundsException(arg);
     } else {
         // Relative pointers;
@@ -112,10 +146,10 @@ void List<T>::deleteAtPosition(int arg) {
         Node<T>* nextNode = current->next;
             
         // edge case: position = (list size) - 1, i.e. tail node;
-        if (arg == getSize()) {
+        if (arg == size()) {
             throw OutOfBoundsException(arg);
         }
-        else if (arg == getSize() - 1) {
+        else if (arg == size() - 1) {
             current = tail;
             prevNode = current->prev;
             prevNode->next = NULL;
@@ -128,15 +162,14 @@ void List<T>::deleteAtPosition(int arg) {
             prevNode->next = nextNode;
             nextNode->prev = prevNode;
         }        
-
-
+        node_count--;
     }
 }
 
 template <class T>
-void List<T>::printList(std::string sep, std::string end_sep) {
+void List<T>::print_list(std::string sep, std::string end_sep) {
     Node<T>* current = head;
-    if (isEmpty()) {
+    if (empty()) {
         throw EmptyListException(std::to_string(ID));
     } else {
         do {
@@ -155,7 +188,7 @@ void List<T>::printList(std::string sep, std::string end_sep) {
 }
 
 template <class T>
-void List<T>::printListReverse(std::string sep, std::string end_sep) {
+void List<T>::print_list_reverse(std::string sep, std::string end_sep) {
     Node<T>* current = tail;
     if (current == NULL) {
         throw EmptyListException(std::to_string(ID));
@@ -175,40 +208,12 @@ void List<T>::printListReverse(std::string sep, std::string end_sep) {
 }
 
 template <class T>
-T List<T>::pop() {
-    int result;
-    if (isEmpty()) {
-        throw EmptyListException(std::to_string(ID));
-    } else {
-        result =  head->data;
-        head = head->next;
-        head->prev = NULL;
-        count--;
-    }
-    return result;
+int List<T>::size() {
+    return node_count + 1;
 }
 
 template <class T>
-T List<T>::popBack() {
-    int result;
-    if (isEmpty()) {
-        throw EmptyListException(std::to_string(ID));
-    } else {
-        result = tail->data;
-        tail = tail->prev;
-        tail->next = NULL;
-        count--;    
-    }
-    return result;
-}
-
-template <class T>
-int List<T>::getSize() {
-    return count + 1;
-}
-
-template <class T>
-bool List<T>::isEmpty() {
+bool List<T>::empty() {
     if (head ==  NULL) {
         return true;  
     } else {
@@ -219,7 +224,7 @@ bool List<T>::isEmpty() {
 template <class T>
 void List<T>::sort() {
     // implementing insertion sort;
-    if (isEmpty()) {
+    if (empty()) {
         throw EmptyListException(std::to_string(ID));
     } else {
         Node<T> *iPtr = head;
@@ -251,19 +256,24 @@ void List<T>::remove_if(Predicate pred) {
                 Node<T>* nextNode;
                 if (current == head) {
                     head = head->next;
-                    count--;
+                    node_count--;
                 } else if(current == tail) {
                     tail = tail->prev;
-                    count--;
+                    node_count--;
                 } else {
                     prevNode = current->prev;
                     nextNode = current->next;
                     prevNode->next = nextNode;
-                    count--;
+                    node_count--;
                 }
             }
             current = current->next;
         }
     }
+
+template <class T>
+Node<T>* List<T>::get_head() {
+    return head;
+}
 
 #endif
