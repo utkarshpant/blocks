@@ -4,9 +4,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include "Node.h"
-#include "EmptyListException.h"
-#include "OutOfBoundsException.h"
+#include "include/Node.h"
+#include "exceptions/EmptyListException.h"
+#include "exceptions/OutOfBoundsException.h"
 
 template <class T>
 class List {

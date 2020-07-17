@@ -1,8 +1,8 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "List.h"
-#include "StackUnderflowException.h"
+#include "exceptions/StackUnderflowException.h"
+#include "include/List.h"
 
 template <class T>
 class Stack {
