@@ -1,8 +1,9 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "exceptions/StackUnderflowException.h"
-#include "include/List.h"
+#include "..\exceptions\StackUnderflowException.h"
+#include "List.h"
+
 
 template <class T>
 class Stack {
@@ -11,7 +12,6 @@ private:
     int ID;
     int count;
     List<T> stack;
-    Node<T> *top;
 
 public:
     // utility functions;
@@ -31,17 +31,17 @@ public:
         ID = ++stack_count;
         // counter of nodes (always size - 1)
         count = -1;
-        // bind pointer for this list adapter to underlying container;
-        top = stack.get_head();
     }
 };
 
 template <class T>
 int Stack<T>::stack_count = 0;
 
+// Push arg into the stack;
 template <class T>
 void Stack<T>::push(T arg) {
     stack.push(arg);
+    // top = stack.get_head();
 }
 
 template <class T>
@@ -51,6 +51,7 @@ T Stack<T>::pop() {
     } else {
         // std::cout << "CAME HERE\t" << std::endl;
         return stack.pop();
+        // top = stack.get_head();
     }
 }
 
@@ -66,7 +67,7 @@ std::string Stack<T>::get_ID() {
 
 template <class T>
 T Stack<T>::peek() {
-    return top->data;
+    return (stack.get_head())->data;
 }
 
 template <class T>
