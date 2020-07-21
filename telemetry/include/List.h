@@ -4,9 +4,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include "include/Node.h"
-#include "exceptions/EmptyListException.h"
-#include "exceptions/OutOfBoundsException.h"
+#include "Node.h"
+#include "..\exceptions\EmptyListException.h"
+#include "..\exceptions\OutOfBoundsException.h"
 
 template <class T>
 class List {
@@ -33,6 +33,7 @@ public:
     
     // Utility functions;
     Node<T>* get_head();
+    Node<T>* get_tail();
     int size();
     bool empty();
     void sort();
@@ -274,6 +275,11 @@ void List<T>::remove_if(Predicate pred) {
 template <class T>
 Node<T>* List<T>::get_head() {
     return head;
+}
+
+template <class T>
+Node<T>* List<T>::get_tail() {
+    return tail;
 }
 
 #endif
