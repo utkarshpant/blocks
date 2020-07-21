@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include\Stack.h"
+#include "Stack.h"
 
 int main(int argc, char **argv) {
     
@@ -18,6 +18,8 @@ int main(int argc, char **argv) {
             stack.push(s);
         }
     }
+
+    std::cout << "The top of the stack is " << stack.peek() << std::endl;
 
     while (!stack.empty()) {
         reversed += stack.pop();
