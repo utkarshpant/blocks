@@ -1,7 +1,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "..\exceptions\StackUnderflowException.h"
+// #include "..\exceptions\EmptyContainerException.h"
 #include "List.h"
 
 
@@ -10,7 +10,7 @@ class Stack {
 private:
     static int stack_count;
     int ID;
-    int count;
+    // int count;
     List<T> stack;
 
 public:
@@ -47,7 +47,7 @@ void Stack<T>::push(T arg) {
 template <class T>
 T Stack<T>::pop() {
     if (stack.empty()) {
-        throw StackUnderflowException(std::to_string(ID));
+        throw EmptyContainerException(std::to_string(ID));
     } else {
         // std::cout << "CAME HERE\t" << std::endl;
         return stack.pop();
@@ -67,12 +67,16 @@ std::string Stack<T>::get_ID() {
 
 template <class T>
 T Stack<T>::peek() {
-    return (stack.get_head())->data;
+    if(stack.empty()) {
+        throw EmptyContainerException(std::to_string(ID));
+    } else {
+        return (stack.get_head())->data;
+    }
 }
 
 template <class T>
 int Stack<T>::size() {
-    return count + 1;
+    return stack.size();
 }
 
 template <class T>
