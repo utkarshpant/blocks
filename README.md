@@ -17,9 +17,23 @@ Telemetry implements **Linked Lists** and **Stacks (so far)** along with the maj
 
 <br>
 
+## Instructions
+
+To use the header files in the current directory structure, first, fork the repository.
+
+1. Now, ensure that you are in the workspace directory, `telemetry`. Inside the subdirectory named `telemetry` is where the code and examples reside. Whenever we're compiling new code, it's easiest to compile while `cd`'d into this directory so we can track where we are.
+
+2. Now, ensure that the source .cpp files to compile are in the `examples` subdirectory. 
+
+3. Then, run the following command: <br> `g++ -I include examples\example_name.cpp -o examples\example_name`
+
+The `-I include` option specifies that the header files to include are in the `include` folder. `examples\example_name.cpp` specifies that the file to be compiled, `example_name.cpp`, is inside `examples`. 
+
 ## TODO's
 
 1. Implement **Queues**.
 2. Start working on Algorithms (Start with the List::Sort algorithm).
 3. read about and implement testing methods. 
 4. Implement a way to _time_ execution, for comparison with STL functions.
+
+_fin._
