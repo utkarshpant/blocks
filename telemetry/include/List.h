@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <string>
 #include "Node.h"
-#include "..\exceptions\EmptyListException.h"
+#include "..\exceptions\EmptyContainerException.h"
 #include "..\exceptions\OutOfBoundsException.h"
 
 template <class T>
@@ -104,7 +104,7 @@ template <class T>
 T List<T>::pop() {
     int result;
     if (empty()) {
-        throw EmptyListException(std::to_string(ID));
+        throw EmptyContainerException(std::to_string(ID));
     } else if(head->next == NULL) {
         // only head node remains;
         result = head->data;
@@ -123,7 +123,7 @@ template <class T>
 T List<T>::pop_back() {
     int result;
     if (empty()) {
-        throw EmptyListException(std::to_string(ID));
+        throw EmptyContainerException(std::to_string(ID));
     } else {
         result = tail->data;
         tail = tail->prev;
@@ -171,7 +171,7 @@ template <class T>
 void List<T>::print_list(std::string sep, std::string end_sep) {
     Node<T>* current = head;
     if (empty()) {
-        throw EmptyListException(std::to_string(ID));
+        throw EmptyContainerException(std::to_string(ID));
     } else {
         do {
             if (current->next == NULL) {
@@ -192,7 +192,7 @@ template <class T>
 void List<T>::print_list_reverse(std::string sep, std::string end_sep) {
     Node<T>* current = tail;
     if (current == NULL) {
-        throw EmptyListException(std::to_string(ID));
+        throw EmptyContainerException(std::to_string(ID));
     } else {
         do {
             if (current->prev == NULL) {
@@ -226,7 +226,7 @@ template <class T>
 void List<T>::sort() {
     // implementing insertion sort;
     if (empty()) {
-        throw EmptyListException(std::to_string(ID));
+        throw EmptyContainerException(std::to_string(ID));
     } else {
         Node<T> *iPtr = head;
         Node<T>* current = head;
@@ -249,28 +249,28 @@ void List<T>::sort() {
 template <class T>
 template <typename Predicate>
 void List<T>::remove_if(Predicate pred) {
-        Node<T>* current = head;
-        while (current != tail) {
-            if(pred(current->data) == true) {
-                // std::cout <<"Pred output on " << current->data << " = " << pred(current->data);
-                Node<T>* prevNode;
-                Node<T>* nextNode;
-                if (current == head) {
-                    head = head->next;
-                    node_count--;
-                } else if(current == tail) {
-                    tail = tail->prev;
-                    node_count--;
-                } else {
-                    prevNode = current->prev;
-                    nextNode = current->next;
-                    prevNode->next = nextNode;
-                    node_count--;
-                }
+    Node<T>* current = head;
+    while (current != tail) {
+        if(pred(current->data) == true) {
+            // std::cout <<"Pred output on " << current->data << " = " << pred(current->data);
+            Node<T>* prevNode;
+            Node<T>* nextNode;
+            if (current == head) {
+                head = head->next;
+                node_count--;
+            } else if(current == tail) {
+                tail = tail->prev;
+                node_count--;
+            } else {
+                prevNode = current->prev;
+                nextNode = current->next;
+                prevNode->next = nextNode;
+                node_count--;
             }
-            current = current->next;
         }
+        current = current->next;
     }
+}
 
 template <class T>
 Node<T>* List<T>::get_head() {
