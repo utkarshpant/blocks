@@ -3,7 +3,7 @@
 ## A Data Structures and Algorithms library
 
 <br>
-A Data Strctures and Algorithms library intended to replicate the major functionality of the STL, in a simplified form. 
+A Data Structures and Algorithms library intended to replicate the major functionality of the STL, in a simplified form. 
 
 **Implemented by Utkarsh Pant. www.linkedin.com/in/utkarshpant**
 
