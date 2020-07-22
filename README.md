@@ -31,7 +31,7 @@ The `-I include` option specifies that the header files to include are in the `i
 
 ## TODO's
 
-1. Implement **Queues**.
+1. ~~Implement **Queues**.~~
 2. Start working on Algorithms (Start with the List::Sort algorithm).
 3. read about and implement testing methods. 
 4. Implement a way to _time_ execution, for comparison with STL functions.
