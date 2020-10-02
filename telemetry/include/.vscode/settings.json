@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "queue": "cpp",
+        "map": "cpp"
+    },
+    "C_Cpp.default.includePath": [${workspaceFolder}/telemetery/include]
+}
