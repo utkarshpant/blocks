@@ -29,6 +29,13 @@ To use the header files in the current directory structure, first, fork the repo
 
 The `-I include` option specifies that the header files to include are in the `include` folder. `examples\example_name.cpp` specifies that the file to be compiled, `example_name.cpp`, is inside `examples`. 
 
+**Note:**
+There could be some compatibility issues at this stage. Please ensure that your C++ compiler supports C++ 11 features. It is recommended that you run the following command to set the compiler flags correctly.
+
+`g++ -std=c++11 -I include examples\example_name.cpp -o examples\example_name`
+
+If all else fails then the latest version of MinGW that is compatible with C++ 11 will have to installed. 
+
 ## TODO's
 
 1. ~~Implement **Queues**.~~
