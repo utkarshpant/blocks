@@ -30,7 +30,7 @@ public:
         // increment the count of currently in-use stacks;
         ID = ++stack_count;
         // counter of nodes (always size - 1)
-        count = -1;
+        // count = -1;
     }
 };
 
