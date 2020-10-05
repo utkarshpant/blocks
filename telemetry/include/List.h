@@ -38,6 +38,7 @@ public:
     bool empty();
     void sort();
     void search(T key);
+
     template<typename Predicate>
     void remove_if(Predicate pred);
 
@@ -109,13 +110,13 @@ T List<T>::pop() {
         // only head node remains;
         result = head->data;
         head = NULL;
-        node_count--;
+        // node_count--;
     } else {
         result =  head->data;
         head = head->next;
         head->prev = NULL;
-        node_count--;
-    }
+    }   
+    node_count--;
     return result;
 }
 
