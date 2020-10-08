@@ -23,6 +23,11 @@ public:
         prev = NULL;
         data = NULL;
     }
+   virtual ~Node(){
+        next = NULL;
+        prev = NULL;
+        
+    }
 };
 
 #endif
