@@ -37,7 +37,7 @@ public:
     int size();
     bool empty();
     void sort();
-    void search(T key);
+    int search(T key);
 
     template<typename Predicate>
     void remove_if(Predicate pred);
