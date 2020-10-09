@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <string>
 #include "Node.h"
-#include "..\exceptions\EmptyContainerException.h"
-#include "..\exceptions\OutOfBoundsException.h"
+#include "../exceptions/EmptyContainerException.h"
+#include "../exceptions/OutOfBoundsException.h"
 
 template <class T>
 class List {
@@ -47,6 +47,15 @@ public:
         node_count = -1;
         head = NULL;
         tail = NULL;
+    }
+    virtual ~List() {
+
+	while(!empty()) {
+            pop();
+	    
+	}
+	
+	
     }
 };
 
@@ -282,5 +291,6 @@ template <class T>
 Node<T>* List<T>::get_tail() {
     return tail;
 }
+
 
 #endif
