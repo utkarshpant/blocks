@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <string>
 #include "Node.h"
-#include "..\exceptions\EmptyContainerException.h"
-#include "..\exceptions\OutOfBoundsException.h"
+#include "../exceptions/EmptyContainerException.h"
+#include "../exceptions/OutOfBoundsException.h"
 
 template <class T>
 class List {
@@ -37,7 +37,9 @@ public:
     int size();
     bool empty();
     void sort();
+
     bool contains(T key);
+
     template<typename Predicate>
     void remove_if(Predicate pred);
 
@@ -46,6 +48,15 @@ public:
         node_count = -1;
         head = NULL;
         tail = NULL;
+    }
+    virtual ~List() {
+
+	while(!empty()) {
+            pop();
+	    
+	}
+	
+	
     }
 };
 
@@ -109,13 +120,13 @@ T List<T>::pop() {
         // only head node remains;
         result = head->data;
         head = NULL;
-        node_count--;
+        // node_count--;
     } else {
         result =  head->data;
         head = head->next;
         head->prev = NULL;
-        node_count--;
-    }
+    }   
+    node_count--;
     return result;
 }
 
@@ -297,5 +308,6 @@ template <class T>
 Node<T>* List<T>::get_tail() {
     return tail;
 }
+
 
 #endif

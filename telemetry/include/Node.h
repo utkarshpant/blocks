@@ -10,16 +10,23 @@ struct Node {
     T data;
 
 public:
-    // Node  {
-    //     //every node initialised without a data argument gets initialised to 0 by default.
-    //     next = NULL;
-    //     prev = NULL;
-    //     data = 0;
-    // }
+
     Node(T arg) {
         next = NULL;
         prev = NULL;
         data = arg;
+    }
+
+    //every node initialised without a data argument gets initialised to NULL by default;
+    Node() {
+        next = NULL;
+        prev = NULL;
+        data = NULL;
+    }
+   virtual ~Node(){
+        next = NULL;
+        prev = NULL;
+        
     }
 };
 
