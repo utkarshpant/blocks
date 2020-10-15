@@ -8,4 +8,5 @@ int main() {
     list.push_back(30);
 
     list.print_list();
+    std:: cout << list.contains(30);
 }

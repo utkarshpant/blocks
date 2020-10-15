@@ -37,7 +37,7 @@ public:
     int size();
     bool empty();
     void sort();
-    void search(T key);
+    bool contains(T key);
     template<typename Predicate>
     void remove_if(Predicate pred);
 
@@ -132,6 +132,22 @@ T List<T>::pop_back() {
     }
     return result;
 }
+
+template <class T>
+bool List<T>::contains(T key) {
+    Node<T>* current = head;
+    if(current==NULL) {
+        throw EmptyContainerException(std::to_string(ID));
+    }
+    while(current!=NULL) {
+        if(current->data==key) { 
+            return true;
+        }
+        current=current->next;
+    }
+    return false;
+}
+
 
 template <class T>
 void List<T>::erase(int arg) {
