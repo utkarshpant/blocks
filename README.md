@@ -4,16 +4,16 @@
 
 <br>
 A Data Structures and Algorithms library intended to replicate the major functionality of the STL, in a simplified form. 
+<br><br>
 
-**Implemented by Utkarsh Pant. www.linkedin.com/in/utkarshpant**
+**Maintained by Utkarsh Pant (www.linkedin.com/in/utkarshpant), with contributions from some kind contributors!**
 
 **I write about the process at www.medium.com/@Utkarsh.pant**
-
-<br>
+<br><br>
 
 ## Features
 
-Telemetry implements **Linked Lists** and **Stacks (so far)** along with the major operations supported by each of them. 
+Telemetry implements **Linked Lists, Stacks and Queues (with Trees in the works)** along with the major operations supported by each of them. 
 
 <br>
 
@@ -38,9 +38,17 @@ If all else fails then the latest version of MinGW that is compatible with C++ 1
 
 ## TODO's
 
-1. ~~Implement **Queues**.~~
-2. Start working on Algorithms (Start with the List::Sort algorithm).
-3. read about and implement testing methods. 
+1. Implement **Trees**, starting with Binary Trees.
+2. ~~Start working on Algorithms (Start with the List::Contains function).~~
+3. Read about and implement testing methods. 
 4. Implement a way to _time_ execution, for comparison with STL functions.
+
+## Looking to contribute?
+
+Fork the repository and follow the instructions above to make sure everything is set up right.
+
+Then, make a new branch on your local repository to commit to, and look for issues opened in this repository on GitHub.
+
+This section will evolve slowly with better instructions. (Can you help fix it? Please come on board with your ideas! 😄)
 
 _fin._
