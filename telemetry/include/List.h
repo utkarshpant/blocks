@@ -16,7 +16,6 @@ private:
     int node_count;
     Node<T> *head;
     Node<T> *tail;
-    // Node* createNode();
     Node<T>* createNode(T arg);
 
 public:
@@ -37,51 +36,47 @@ public:
     int size();
     bool empty();
     void sort();
-
     bool contains(T key);
-
     template<typename Predicate>
     void remove_if(Predicate pred);
 
+    // Constructors and Destructors;
     List() {
         ID = ++list_count;
         node_count = -1;
-        head = NULL;
-        tail = NULL;
+        head = nullptr;
+        tail = nullptr;
     }
-    virtual ~List() {
 
-	while(!empty()) {
+    virtual ~List() {
+        while(!empty()) {
             pop();
-	    
-	}
-	
-	
+        }
+        list_count--;
     }
 };
 
 template <class T>
 int List<T>::list_count = 0;
 
-// Defitions of member functions of the Node struct;
+// Definitions of member functions of the List class;
 template <class T>
 Node<T>* List<T>::createNode(T arg) {
     Node<T>* newNode = new Node<T>(arg);
     return newNode;
 }
 
-// Definitions of member functions of the List class;
 template <class T>
 void List<T>::push(T arg) {
     Node<T>* tempNode = createNode(arg);
     
-    if (head == NULL) {
+    if (head == nullptr) {
         // Changing head target;
         head = tempNode;
 
         // Setting linkages;
-        tempNode->next = NULL;
-        tempNode->prev = NULL;
+        tempNode->next = nullptr;
+        tempNode->prev = nullptr;
         tail = tempNode;
     } else {
         tempNode->next = head;
@@ -94,13 +89,13 @@ void List<T>::push(T arg) {
 template <class T>
 void List<T>::push_back(T arg) {
     Node<T>* tempNode = createNode(arg);
-    if (head == NULL) {
+    if (head == nullptr) {
         // Changing head target;
         head = tempNode;
 
         // Setting linkages;
-        tempNode->next = NULL;
-        tempNode->prev = NULL;
+        tempNode->next = nullptr;
+        tempNode->prev = nullptr;
         tail = tempNode;
     } else {
         //  Use tail directly;
@@ -116,15 +111,17 @@ T List<T>::pop() {
     int result;
     if (empty()) {
         throw EmptyContainerException(std::to_string(ID));
-    } else if(head->next == NULL) {
+    } else if(head->next == nullptr) {
         // only head node remains;
         result = head->data;
-        head = NULL;
+        delete head;
+        head = nullptr;
         // node_count--;
     } else {
         result =  head->data;
         head = head->next;
-        head->prev = NULL;
+        delete head->prev;
+        head->prev = nullptr;
     }   
     node_count--;
     return result;
@@ -138,7 +135,8 @@ T List<T>::pop_back() {
     } else {
         result = tail->data;
         tail = tail->prev;
-        tail->next = NULL;
+        delete tail->next;
+        tail->next = nullptr;
         node_count--;    
     }
     return result;
@@ -147,10 +145,10 @@ T List<T>::pop_back() {
 template <class T>
 bool List<T>::contains(T key) {
     Node<T>* current = head;
-    if(current==NULL) {
+    if(current==nullptr) {
         throw EmptyContainerException(std::to_string(ID));
     }
-    while(current!=NULL) {
+    while(current!=nullptr) {
         if(current->data==key) { 
             return true;
         }
@@ -180,7 +178,7 @@ void List<T>::erase(int arg) {
         else if (arg == size() - 1) {
             current = tail;
             prevNode = current->prev;
-            prevNode->next = NULL;
+            prevNode->next = nullptr;
         } else {
             int counter = 0;
             while (counter != arg) {
@@ -201,7 +199,7 @@ void List<T>::print_list(std::string sep, std::string end_sep) {
         throw EmptyContainerException(std::to_string(ID));
     } else {
         do {
-            if (current->next == NULL) {
+            if (current->next == nullptr) {
                 // last element;
                 std::cout << current->data << end_sep;
                 break;
@@ -210,7 +208,7 @@ void List<T>::print_list(std::string sep, std::string end_sep) {
                 current = current->next;
             }
         }
-        while (current != NULL);
+        while (current != nullptr);
     }
     
 }
@@ -218,11 +216,11 @@ void List<T>::print_list(std::string sep, std::string end_sep) {
 template <class T>
 void List<T>::print_list_reverse(std::string sep, std::string end_sep) {
     Node<T>* current = tail;
-    if (current == NULL) {
+    if (current == nullptr) {
         throw EmptyContainerException(std::to_string(ID));
     } else {
         do {
-            if (current->prev == NULL) {
+            if (current->prev == nullptr) {
                 // last element;
                 std::cout << current->data << end_sep;
                 break;
@@ -231,7 +229,7 @@ void List<T>::print_list_reverse(std::string sep, std::string end_sep) {
                 current = current->prev;
             }
         } 
-        while (current != NULL);
+        while (current != nullptr);
     }
 }
 
@@ -242,7 +240,7 @@ int List<T>::size() {
 
 template <class T>
 bool List<T>::empty() {
-    if (head ==  NULL) {
+    if (head ==  nullptr) {
         return true;  
     } else {
         return false;
@@ -258,7 +256,7 @@ void List<T>::sort() {
         Node<T> *iPtr = head;
         Node<T>* current = head;
 
-        while (current != NULL) {
+        while (current != nullptr) {
             iPtr = head;
             while (iPtr != current) {
                 if (iPtr->data > current->data) {

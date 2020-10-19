@@ -12,21 +12,21 @@ struct Node {
 public:
 
     Node(T arg) {
-        next = NULL;
-        prev = NULL;
+        next = nullptr;
+        prev = nullptr;
         data = arg;
     }
 
     //every node initialised without a data argument gets initialised to NULL by default;
     Node() {
-        next = NULL;
-        prev = NULL;
+        next = nullptr;
+        prev = nullptr;
         data = NULL;
     }
-   virtual ~Node(){
-        next = NULL;
-        prev = NULL;
-        
+
+    virtual ~Node(){
+        next = nullptr;
+        prev = nullptr;  
     }
 };
 

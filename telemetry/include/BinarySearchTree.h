@@ -23,14 +23,14 @@ public:
 
     BinarySearchTree() {
         ID = ++tree_count;
-        root = NULL;
+        root = nullptr;
     }
 };
 
 template <class T>
 TreeNode<T>* BinarySearchTree<T>::insert(T arg) {
     TreeNode<T>* current = root;
-    while (current != NULL) {
+    while (current != nullptr) {
         if (arg == current->data) {
             // discovering a duplicate value;
             throw DuplicateValueException(std::to_string(arg), std::to_string(ID));
@@ -46,12 +46,12 @@ TreeNode<T>* BinarySearchTree<T>::insert(T arg) {
 
 template <class T>
 void BinarySearchTree<T>::remove(T arg) {
-    if (root == NULL) {
+    if (root == nullptr) {
         throw EmptyContainerException(std::to_string(ID));
     } else {
         TreeNode<T>* current = root;
         while (current->data != arg) {
-            if (current == NULL) {
+            if (current == nullptr) {
                 // a leaf node was reached, no match found;
                 // throw an InvalidKeyException (?)
                 std::cout << "There is no key that matches." << std::endl;
