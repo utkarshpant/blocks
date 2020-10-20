@@ -25,13 +25,18 @@ protected:
 
 public:
     // Manipulation functions;
-    void insert(T arg);
-    T remove();
+    void insert(T arg) = 0;
+    T remove() = 0;
 
     // constructor for the base class; 
     Tree() {
         ID = ++tree_count;
-        root = NULL;
+        root = nullptr;
+    }
+
+    virtual ~Tree() {
+        root = nullptr;
+        tree_count--;
     }
     
     // Utility functions;

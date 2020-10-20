@@ -14,7 +14,7 @@ public:
     std::string name;
 
     // constructors;
-    EmptyContainerException(std::string data) {
+    explicit EmptyContainerException(std::string data) {
         name = data;
     }
 };

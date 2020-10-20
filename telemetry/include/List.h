@@ -27,8 +27,8 @@ public:
     void erase(int pos);
 
     // traverse functions;
-    void print_list(std::string sep = "\n", std::string end_sep = "\n");
-    void print_list_reverse(std::string sep = "\n", std::string end_sep = "\n");
+    void print_list(const std::string &sep = "\n", const std::string &end_sep = "\n");
+    void print_list_reverse(const std::string &sep = "\n", const std::string &end_sep = "\n");
     
     // Utility functions;
     Node<T>* get_head();
@@ -193,7 +193,7 @@ void List<T>::erase(int arg) {
 }
 
 template <class T>
-void List<T>::print_list(std::string sep, std::string end_sep) {
+void List<T>::print_list(std::string &sep, std::string &end_sep) {
     Node<T>* current = head;
     if (empty()) {
         throw EmptyContainerException(std::to_string(ID));
@@ -214,7 +214,7 @@ void List<T>::print_list(std::string sep, std::string end_sep) {
 }
 
 template <class T>
-void List<T>::print_list_reverse(std::string sep, std::string end_sep) {
+void List<T>::print_list_reverse(const std::string &sep, const std::string &end_sep) {
     Node<T>* current = tail;
     if (current == nullptr) {
         throw EmptyContainerException(std::to_string(ID));

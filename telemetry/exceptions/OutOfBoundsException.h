@@ -14,7 +14,7 @@ public:
     int index;
 
     // constructors;
-    OutOfBoundsException(int data) {
+    explicit OutOfBoundsException(int data) {
         index = data;
     }
 };

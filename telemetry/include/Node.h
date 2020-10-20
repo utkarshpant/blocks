@@ -11,17 +11,18 @@ struct Node {
 
 public:
 
-    Node(T arg) {
+    explicit Node(T arg) : data(arg) {
         next = nullptr;
         prev = nullptr;
-        data = arg;
+        // data = arg;
+        // data gets initialised to a value in the initialization list;
     }
 
     //every node initialised without a data argument gets initialised to NULL by default;
-    Node() {
+    Node(): data(NULL) {
         next = nullptr;
         prev = nullptr;
-        data = NULL;
+        // data = NULL;
     }
 
     virtual ~Node(){
