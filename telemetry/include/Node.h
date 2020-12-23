@@ -10,7 +10,6 @@ struct Node {
     T data;
 
 public:
-
     explicit Node(T arg) : data(arg) {
         next = nullptr;
         prev = nullptr;

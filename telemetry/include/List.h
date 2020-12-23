@@ -193,7 +193,7 @@ void List<T>::erase(int arg) {
 }
 
 template <class T>
-void List<T>::print_list(std::string &sep, std::string &end_sep) {
+void List<T>::print_list(const std::string &sep, const std::string &end_sep) {
     Node<T>* current = head;
     if (empty()) {
         throw EmptyContainerException(std::to_string(ID));

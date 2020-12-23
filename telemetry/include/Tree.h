@@ -5,28 +5,29 @@
 #include <cstdlib>
 #include <string>
 #include "TreeNode.h"
-#include "Queue.h"
+// #include "Queue.h"
 
 
 /*
 *   The Tree class is an abstract base class meant to detail some basic
-*   structural elements of other derived Trees like AVL or Red/Black Trees. 
+*   structural elements of other derived Trees like Binary Search Trees. 
+*   AVL/Red-Black Trees will require a different node structure.
 */
 
 template <class T>
 class Tree {
 private:
     static int tree_count;
-    int ID;
     
 protected:
     TreeNode<T> *root;
     TreeNode<T>* createNode(T arg);
+    int ID;
 
 public:
     // Manipulation functions;
-    void insert(T arg) = 0;
-    T remove() = 0;
+    virtual TreeNode<T>* insert(T arg) = 0;
+    virtual void remove(T arg) = 0;
 
     // constructor for the base class; 
     Tree() {
@@ -50,7 +51,9 @@ int Tree<T>::tree_count = 0;
 
 template <class T>
 TreeNode<T>* Tree<T>::createNode(T arg) {
-    TreeNode *newNode = new TreeNode<T>(arg);
+    TreeNode<T> *newNode = new TreeNode<T>(arg);
+    newNode->left = nullptr;
+    newNode->right = nullptr;
     return newNode;
 }
 

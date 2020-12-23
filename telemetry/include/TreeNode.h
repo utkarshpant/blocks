@@ -11,17 +11,17 @@ struct TreeNode {
 
 public:
 
-    Node(T arg) {
-        left = NULL;
-        right = NULL;
+    TreeNode(T arg) {
+        left = nullptr;
+        right = nullptr;
         data = arg;
     }
 
     //every node initialised without a data argument gets initialised to NULL by default;
-    Node() {
-        left = NULL;
-        right = NULL;
-        data = NULL;
+    TreeNode() {
+        left = nullptr;
+        right = nullptr;
+        data = nullptr;
     }
 };
 
