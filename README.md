@@ -1,4 +1,4 @@
-# Telemetry
+# Blocks
 
 ## A Data Structures and Algorithms library
 
