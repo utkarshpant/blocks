@@ -2,6 +2,8 @@
 
 ## A Data Structures and Algorithms library
 
+### Please note that the name of this library was changed from _Telemetry_ to _Blocks_ to avoid confusion w.r.t. my blog project. I'm working on slowwwwwwwly updating this repository to make sure the name change reflects everywhere. Baby steps.
+
 <br>
 A Data Structures and Algorithms library intended to replicate the major functionality of the STL, in a simplified form. 
 <br><br>
@@ -13,7 +15,7 @@ A Data Structures and Algorithms library intended to replicate the major functio
 
 ## Features
 
-Telemetry implements **Linked Lists, Stacks and Queues (with Trees in the works)** along with the major operations supported by each of them. 
+This library implements (_will implement_...) **Linked Lists, Stacks and Queues (with Trees in the works)** along with the major operations supported by each of them. 
 
 <br>
 
